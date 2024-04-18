@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    container_name: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: DS_user1
+      MONGO_INITDB_ROOT_PASSWORD: 12345
+    volumes:
+      - ./db_data/:/data/db/
+
+  python_flask:
+    build: ./python_flask_app
+    container_name: python_flask
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
